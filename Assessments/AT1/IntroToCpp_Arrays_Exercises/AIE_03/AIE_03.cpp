@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <string>
+using namespace std;
 
 const int* BinarySearch(const int* arr, int count, int searchVal);
 void TestResult(const int* result, int* const expected);
