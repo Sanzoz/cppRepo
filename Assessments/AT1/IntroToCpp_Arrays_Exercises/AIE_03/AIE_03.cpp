@@ -16,11 +16,11 @@ int main(int argc, char** argv)
 	// The numbers in the array are assumed to be sorted
 	// search for the values 9, 1, 15, 0
 
-	TestResult( BinarySearch(arr1, NUM_ITEMS, 9),  &arr1[4]   );
-	TestResult( BinarySearch(arr1, NUM_ITEMS, 1),  &arr1[0]   );
-	TestResult( BinarySearch(arr1, NUM_ITEMS, 15), &arr1[7]   );
-	TestResult( BinarySearch(arr1, NUM_ITEMS, 0),  nullptr    );
-	TestResult( BinarySearch(arr1, NUM_ITEMS, 16), nullptr    );
+	TestResult(BinarySearch(arr1, NUM_ITEMS, 9), &arr1[4]);
+	TestResult(BinarySearch(arr1, NUM_ITEMS, 1), &arr1[0]);
+	TestResult(BinarySearch(arr1, NUM_ITEMS, 15), &arr1[7]);
+	TestResult(BinarySearch(arr1, NUM_ITEMS, 0), nullptr);
+	TestResult(BinarySearch(arr1, NUM_ITEMS, 16), nullptr);
 
 
 	return 0;
@@ -48,6 +48,21 @@ const int* BinarySearch(const int* arr, int count, int searchVal)
 	// This method should:
 	//	- Return: nullptr if the value is not found
 	//  - Return: pointer to the found value in the array
-	
-	return nullptr;
+
+	int low = 0, high = sizeof arr - 1, mid = 0; //helping variables
+
+	while (low <= high) { //while loop
+		mid = low + (high - low) / 2; //mid = pivot
+
+		if (arr[mid] == searchVal) { //if mid is the value we want, return it
+			return &arr[mid];
+		}
+		if (arr[mid] < searchVal) { //if lower, raise the lower pivot point
+			low = mid + 1;
+		}
+		else { //else lower the upper pivot point
+			high = mid - 1;
+		}
+	}
+	return nullptr; //if index is not found, return null
 }
