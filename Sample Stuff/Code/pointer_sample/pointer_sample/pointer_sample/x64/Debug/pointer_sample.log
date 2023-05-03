@@ -1,0 +1,3 @@
+﻿  pointer_sample.cpp
+C:\Users\s221097\Documents\GitHub\cppRepo\Sample Stuff\Code\pointer_sample\pointer_sample\pointer_sample\pointer_sample.cpp(28,10): warning C4101: 'pt4': unreferenced local variable
+  pointer_sample.vcxproj -> C:\Users\s221097\Documents\GitHub\cppRepo\Sample Stuff\Code\pointer_sample\pointer_sample\x64\Debug\pointer_sample.exe
