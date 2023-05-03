@@ -53,15 +53,15 @@ void Application::Update(float deltaTime)
 {
 	if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
 	{
-		Vector2 mousePos = GetMousePosition();
+		Vector2 mousePos = GetMousePosition(); //get V2 positions
 
 		// Task 3:
 		// TODO: Calculate row and col index based on the mouse positon
-		int rowIndex = mousePos.x / m_tileWidth; 
-		int colIndex = mousePos.y / m_tileHeight;
+		int rowIndex = mousePos.x / m_tileWidth; //mouse x divided by tile size
+		int colIndex = mousePos.y / m_tileHeight; //mouse y divided by tile size
 
 		// TODO: calculate the index of the tile clicked on based on the row/col index
-		int tileIndex = rowIndex * COLS + colIndex;
+		int tileIndex = rowIndex * COLS + colIndex; //sets index to interact with
 
 		m_tiles[tileIndex] += 1;
 		if (m_tiles[tileIndex] >= 5)
@@ -87,17 +87,16 @@ void Application::Draw()
 	float xPos = 0;
 	float yPos = 0;
 
-	for (int rowIndex = 0; rowIndex < ROWS; rowIndex++) {
-		
-		for (int colIndex = 0; colIndex < COLS; colIndex++) {
-			xPos = rowIndex * m_tileWidth;
-			yPos = colIndex * m_tileHeight;
+	for (int rowIndex = 0; rowIndex < ROWS; rowIndex++) { //loops through based on amount of Rows to draw
+		for (int colIndex = 0; colIndex < COLS; colIndex++) { //loops through for the amount of Columns to draw
+			xPos = rowIndex * m_tileWidth; //sets tile size of each index
+			yPos = colIndex * m_tileHeight; //sets tiel size of each index
 
-			int index = rowIndex * COLS + colIndex;
+			int index = rowIndex * COLS + colIndex; //sets index for drawing tiles
 
 			Color color = GetTileColor(m_tiles[index]); // pass in the tilevalue
 
-			DrawRectangle(xPos, yPos, m_tileWidth, m_tileHeight, color);
+			DrawRectangle(xPos, yPos, m_tileWidth, m_tileHeight, color); //draws the tiles
 		}
 	}
 
