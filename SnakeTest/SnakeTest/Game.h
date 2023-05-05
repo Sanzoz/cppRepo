@@ -1,18 +1,24 @@
 #pragma once
-	
-	const int screenW = 1280;
-	const int screenH = 768;
+#include <raylib.h>
 
-	const int snakeLength = 256;
-	const int tileSize = 55;
+const int screenW = 1280; //screen width
+const int screenH = 800; //screen height
 
-	bool gameOver;
-	int framesCounter;
-	int score;
+const int snakeLength = 256; //max length of the snake
+const int tileSize = 54; //each individual tile's sizes
 
-	int tailCounter; //counts the tail length
-	bool canMove;
+static int gameSpeed; //speed of the game updates
 
-	void Initialize();
-	void Update();
-	void Draw();
+static bool gameOver; //game over
+static int framesCounter; //counts the frames that have passed
+static int score; //tracks the amount of food eaten
+
+static int tailCounter; //counts the tails of the snake
+static bool canMove; //prevents inputting multiple inputs in each update
+
+static Vector2 offset; //offset, used for offsetting the grid, and keeping 
+					   //everything placed on the grid in a civilised manor
+
+void Initialize();
+void Update();
+void Draw();

@@ -10,7 +10,7 @@ int main() {
 
 	Initialize(); //calls initialize, starts the game
 
-	//while loop to make the game actually run
+	//while loop to make the game actually run until ESC is pressed
 	while (!WindowShouldClose()) {
 		Update();
 		Draw();

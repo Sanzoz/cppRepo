@@ -1,10 +1,2 @@
 ﻿  Game.cpp
-  Main.cpp
-  Generating Code...
-Main.obj : error LNK2005: "bool gameOver" (?gameOver@@3_NA) already defined in Game.obj
-Main.obj : error LNK2005: "int framesCounter" (?framesCounter@@3HA) already defined in Game.obj
-Main.obj : error LNK2005: "int score" (?score@@3HA) already defined in Game.obj
-Main.obj : error LNK2005: "int tailCounter" (?tailCounter@@3HA) already defined in Game.obj
-Main.obj : error LNK2005: "bool canMove" (?canMove@@3_NA) already defined in Game.obj
-LINK : warning LNK4098: defaultlib 'MSVCRT' conflicts with use of other libs; use /NODEFAULTLIB:library
-C:\Users\s221097\Documents\GitHub\cppRepo\SnakeTest\x64\Debug\SnakeTest.exe : fatal error LNK1169: one or more multiply defined symbols found
+  SnakeTest.vcxproj -> C:\Users\s221097\Documents\GitHub\cppRepo\SnakeTest\x64\Debug\SnakeTest.exe

@@ -4,10 +4,10 @@
 class FoodClass
 {
 	public:
-		Vector2 position;
-		Vector2 size;
+		Vector2 position; //keeps position of the food
+		Vector2 size; //keeps size of the food
 
-		bool active;
+		bool active; //whether the food is spawned or not
 
-		Color color;
+		Color color; //color of food
 };

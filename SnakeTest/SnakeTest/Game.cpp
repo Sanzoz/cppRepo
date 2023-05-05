@@ -3,25 +3,20 @@
 #include "Game.h"
 #include "SnakeClass.h"
 #include "FoodClass.h"
+#include "CustomColors.h"
 using namespace std;
-
-Color MLCHT{ 100, 233, 134, 255 };
-Color DMLCHT{ 70, 203, 104, 255 };
-
-Color DARKERGRAY{ 34, 34, 34, 255 };
-Color GRID{ 74, 74, 74, 255 };
 
 SnakeClass snake[snakeLength] = { 0 }; //used for snake
 Vector2 snakePos[snakeLength] = { 0 }; //used for snake tail
 
 FoodClass food;
-Vector2 offset;
 
 void Initialize() {
 	framesCounter = 0; //resets framecounter
 	gameOver = false; //resets gameover
 	tailCounter = 1; //resets snake size
-	score = 0;
+	score = 0; //resets score
+	gameSpeed = 10; //resets game update rate
 
 	offset.x = screenW % tileSize; //creates an offset for making the grid and grid movement
 	offset.y = screenH % tileSize;
@@ -31,10 +26,11 @@ void Initialize() {
 		snake[i].size = Vector2{ tileSize, tileSize }; //sets size to be the size of the grid
 		snake[i].speed = Vector2{ tileSize, 0 }; //sets default speed
 
-		if (i == 0) snake[i].color = MLCHT; //sets snake color
-		else snake[i].color = DMLCHT; //sets tail color
+		if (i == 0) snake[i].color = MALACHITE; //sets snake color
+		else if (i % 2 == 0) snake[i].color = DARKERMALACHITE; //sets tail color
+		else snake[i].color = DARKMALACHITE; //sets a second tail color
 	}
-	for (int i = 0; i < snakeLength; i++) {
+	for (int i = 0; i < snakeLength; i++) { //
 		snakePos[i] = Vector2{ 0.0f, 0.0f };
 	}
 
@@ -62,11 +58,20 @@ void Update() {
 			snake[0].speed = Vector2{ 0, tileSize };
 			canMove = false;
 		}
-		//if (IsKeyPressed(KEY_G)) gameOver = true; //debug, used to test the game over screen and resetting
+		
+		//switch case: as the snake gets longer, you go faster by increasing how often the game updates
+		switch (tailCounter) {
+		case(11): if (tailCounter == 11 && gameSpeed == 10) gameSpeed = 9;
+		case(21): if (tailCounter == 21 && gameSpeed == 9) gameSpeed  = 8;
+		case(31): if (tailCounter == 31 && gameSpeed == 8) gameSpeed = 7;
+		case(41): if (tailCounter == 41 && gameSpeed == 7) gameSpeed = 6;
+		case(51): if (tailCounter == 51 && gameSpeed == 6) gameSpeed = 5;
+		}		// ^^ if statement double checks the switch case, and makes sure the snake is the correct size
+
 		//SNAKE MOVEMENT -- Uses speed from inputs and moves each index within the snake array in the correct direction
 		for (int i = 0; i < tailCounter; i++) snakePos[i] = snake[i].position; //sets the tails to follow the snake and moves them
 
-		if ((framesCounter % 7) == 0) { // "(framesCounter % 6) == 0" sets the speed of the games updates by waiting until 
+		if ((framesCounter % gameSpeed) == 0) { // "(framesCounter % 6) == 0" sets the speed of the games updates by waiting until 
 			for (int i = 0; i < tailCounter; i++) { // the remainder of frames passed is 0. once it is 0, it updates the snake and checks for collision
 				if (i == 0) {
 					snake[0].position.x += snake[0].speed.x; //moves snake based on speed x
@@ -87,7 +92,7 @@ void Update() {
 		//FOOD SPAWNING -- spawnin that food yo
 		if (!food.active) {
 			food.active = true;
-			food.position = Vector2{ GetRandomValue(0, (screenW / tileSize) - 1) * tileSize + offset.x / 2, GetRandomValue(0, (screenH / tileSize) - 1) * tileSize + offset.y / 2 }; //spawns food randomly
+			food.position = Vector2{ GetRandomValue(0, (screenW / tileSize) - 1) * tileSize + offset.x / 2, GetRandomValue(0, (screenH / tileSize) - 1) * tileSize + offset.y / 2 }; //spawns food randomly within the grid
 
 			for (int i = 0; i < tailCounter; i++) { //for loop to check if the food spawned inside the snake, and if it does, respawn it before ressetting i to 0.
 				while ((food.position.x == snake[i].position.x) && (food.position.y == snake[i].position.y)) {
@@ -103,6 +108,7 @@ void Update() {
 			score += 10; //add score
 			food.active = false; //set inactive to get it to respawn
 		}
+
 		framesCounter++;
 	}
 	else {
@@ -125,13 +131,14 @@ void Draw() {
 
 		//draws the grid, starting from top to bottom, then left to right. draws it on top of everything else
 		for (int i = 0; i < screenW / tileSize + 2; i++) {
-			DrawLineV(Vector2{ tileSize * i + offset.x / 2, offset.y / 2 }, Vector2{ tileSize * i + offset.x / 2, screenH - offset.y / 2 }, GRID);
+			DrawLineV(Vector2{ tileSize * i + offset.x / 2, offset.y / 2 }, Vector2{ tileSize * i + offset.x / 2, screenH - offset.y / 2 }, LIGHTERGRAY);
 		}
 		for (int i = 0; i < screenW / tileSize + 2; i++) {
-			DrawLineV(Vector2{ offset.x / 2, tileSize * i + offset.y / 2 }, Vector2{ screenW - offset.x / 2, tileSize * i + offset.y / 2 }, GRID);
+			DrawLineV(Vector2{ offset.x / 2, tileSize * i + offset.y / 2 }, Vector2{ screenW - offset.x / 2, tileSize * i + offset.y / 2 }, LIGHTERGRAY);
 		}
 
-		DrawText(TextFormat("Score: %05i", score), 7, 3, 26, WHITE); //draws the score
+		DrawText(TextFormat("Score: %05i", score), 20, 1, 26, WHITE); //draws the score
+		DrawText(TextFormat("Update Rate: %02i", gameSpeed), 220, 1, 26, WHITE); //speed of the snake
 	}
 	else DrawText("         GAME OVER\nPRESS [ENTER] TO PLAY", GetScreenWidth() / 4, GetScreenHeight() / 2, 50, LIME); //gameover text
 
