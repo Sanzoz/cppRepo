@@ -4,7 +4,7 @@
 #include "Game.h"
 using namespace std;
 
-int main() {
+int WinMain() {
 	InitWindow(screenW, screenH, "SNAKE GAME TEST"); //initial window
 	SetTargetFPS(60); //sets the target framerate
 

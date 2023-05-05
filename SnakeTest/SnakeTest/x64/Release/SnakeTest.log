@@ -1,0 +1,4 @@
+﻿  Game.cpp
+  Main.cpp
+MSVCRT.lib(exe_main.obj) : error LNK2001: unresolved external symbol main
+C:\Users\s221097\Documents\GitHub\cppRepo\SnakeTest\x64\Release\SnakeTest.exe : fatal error LNK1120: 1 unresolved externals
