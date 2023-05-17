@@ -24,7 +24,7 @@ void Initialize() {
 	for (int i = 0; i < snakeLength; i++) {
 		snake[i].position = Vector2{ offset.x / 2, offset.y / 2 }; //snake starting position == offset / 2
 		snake[i].size = Vector2{ tileSize, tileSize }; //sets size to be the size of the grid
-		snake[i].speed = Vector2{ tileSize, 0 }; //sets default speed
+		snake[i].direction = Vector2{ tileSize, 0 }; //sets default speed
 
 		if (i == 0) snake[i].color = MALACHITE; //sets snake color
 		else if (i % 2 == 0) snake[i].color = DARKERMALACHITE; //sets tail color
@@ -42,20 +42,20 @@ void Initialize() {
 void Update() {
 	if (!gameOver) {
 		//INPUTS -- Gets the key pressed and checks that the movement can be done, ie hitting left while moving right
-		if (IsKeyPressed(KEY_RIGHT) && (snake[0].speed.x == 0) && canMove) { //canMove prevents you from spamming inputs until an update has occured
-			snake[0].speed = Vector2{ tileSize, 0 }; //sets speed to tileSize so we move within the grid
+		if (IsKeyPressed(KEY_RIGHT) && (snake[0].direction.x == 0) && canMove) { //canMove prevents you from spamming inputs until an update has occured
+			snake[0].direction = Vector2{ tileSize, 0 }; //sets speed to tileSize so we move within the grid
 			canMove = false;
 		}
-		if (IsKeyPressed(KEY_LEFT) && (snake[0].speed.x == 0) && canMove) {
-			snake[0].speed = Vector2{ -tileSize, 0 };
+		if (IsKeyPressed(KEY_LEFT) && (snake[0].direction.x == 0) && canMove) {
+			snake[0].direction = Vector2{ -tileSize, 0 };
 			canMove = false;
 		}
-		if (IsKeyPressed(KEY_UP) && (snake[0].speed.y == 0) && canMove) {
-			snake[0].speed = Vector2{ 0, -tileSize };
+		if (IsKeyPressed(KEY_UP) && (snake[0].direction.y == 0) && canMove) {
+			snake[0].direction = Vector2{ 0, -tileSize };
 			canMove = false;
 		}
-		if (IsKeyPressed(KEY_DOWN) && (snake[0].speed.y == 0) && canMove) {
-			snake[0].speed = Vector2{ 0, tileSize };
+		if (IsKeyPressed(KEY_DOWN) && (snake[0].direction.y == 0) && canMove) {
+			snake[0].direction = Vector2{ 0, tileSize };
 			canMove = false;
 		}
 		
@@ -74,8 +74,8 @@ void Update() {
 		if ((framesCounter % gameSpeed) == 0) { // "(framesCounter % 6) == 0" sets the speed of the games updates by waiting until 
 			for (int i = 0; i < tailCounter; i++) { // the remainder of frames passed is 0. once it is 0, it updates the snake and checks for collision
 				if (i == 0) {
-					snake[0].position.x += snake[0].speed.x; //moves snake based on speed x
-					snake[0].position.y += snake[0].speed.y; //moves snake based on speed y
+					snake[0].position.x += snake[0].direction.x; //moves snake based on speed x
+					snake[0].position.y += snake[0].direction.y; //moves snake based on speed y
 					canMove = true; //resets canMove to allow turning
 				}
 				else snake[i].position = snakePos[i - 1]; //tail movement: if not the head, moves the snake by following the piece in front of them
