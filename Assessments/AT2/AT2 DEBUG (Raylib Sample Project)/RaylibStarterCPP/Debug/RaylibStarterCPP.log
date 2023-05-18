@@ -1,0 +1,4 @@
+﻿  DataFile.cpp
+C:\Users\s221097\Documents\GitHub\AIEYear1Samples-master\IntroCPP_BinaryFileIO_NPCData\DataFile.cpp(32,13): warning C4018: '<=': signed/unsigned mismatch
+C:\Users\s221097\Documents\GitHub\AIEYear1Samples-master\IntroCPP_BinaryFileIO_NPCData\DataFile.cpp(130,20): warning C4018: '<': signed/unsigned mismatch
+  RaylibStarterCPP.vcxproj -> C:\Users\s221097\Documents\GitHub\cppRepo\RaylibCPPTemplate\bin\Win32\Debug\RaylibStarterCPP.exe

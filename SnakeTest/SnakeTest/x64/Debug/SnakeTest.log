@@ -1,2 +1,4 @@
 ﻿  Game.cpp
+C:\Users\s221097\Documents\GitHub\cppRepo\SnakeTest\SnakeTest\Game.cpp(144,42): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\s221097\Documents\GitHub\cppRepo\SnakeTest\SnakeTest\Game.cpp(145,77): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
   SnakeTest.vcxproj -> C:\Users\s221097\Documents\GitHub\cppRepo\SnakeTest\x64\Debug\SnakeTest.exe

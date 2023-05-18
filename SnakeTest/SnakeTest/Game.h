@@ -22,3 +22,4 @@ static Vector2 offset; //offset, used for offsetting the grid, and keeping
 void Initialize();
 void Update();
 void Draw();
+void Deinitialize();

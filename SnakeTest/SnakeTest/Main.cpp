@@ -15,4 +15,6 @@ int WinMain() {
 		Update();
 		Draw();
 	}
+
+	Deinitialize();
 }

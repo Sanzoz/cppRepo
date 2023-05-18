@@ -140,7 +140,14 @@ void Draw() {
 		DrawText(TextFormat("Score: %05i", score), 20, 1, 26, WHITE); //draws the score
 		DrawText(TextFormat("Update Rate: %02i", gameSpeed), 220, 1, 26, WHITE); //speed of the snake
 	}
-	else DrawText("         GAME OVER\nPRESS [ENTER] TO PLAY", GetScreenWidth() / 4, GetScreenHeight() / 2, 50, LIME); //gameover text
-
+	else {
+		DrawText("GAME OVER", GetScreenWidth() / 2.5f, GetScreenHeight() / 2, 50, LIME); //gameover text
+		DrawText("PRESS [ENTER] TO PLAY", GetScreenWidth() / 4, GetScreenHeight() / 1.75f, 50, LIME); //gameover text
+	}
 	EndDrawing();
+}
+
+void Deinitialize() {
+	//to be used for deleting everything after use
+	//currently empty cause I don't know how
 }
