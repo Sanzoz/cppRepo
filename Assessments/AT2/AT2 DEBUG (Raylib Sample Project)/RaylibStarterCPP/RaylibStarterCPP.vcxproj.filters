@@ -15,19 +15,19 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\AIEYear1Samples-master\IntroCPP_BinaryFileIO_NPCData\DataFile.h">
+    <ClInclude Include="DataFile.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\AIEYear1Samples-master\IntroCPP_BinaryFileIO_NPCData\DataFile.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\AIEYear1Samples-master\IntroCPP_BinaryFileIO_NPCData\main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
+    <None Include="npc_data.dat" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="npc_data.dat" />
+    <ClCompile Include="DataFile.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
