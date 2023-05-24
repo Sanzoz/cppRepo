@@ -1,7 +1,6 @@
 ﻿C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(534,5): warning MSB8028: The intermediate directory (Debug\) contains files shared from another project (RaylibStarterCPP.vcxproj).  This can lead to incorrect clean and rebuild behavior.
   DataFile.cpp
-C:\Users\s221097\Documents\GitHub\cppRepo\Assessments\AT2\AT2 DEBUG (Raylib Sample Project)\RaylibStarterCPP\DataFile.cpp(34,13): warning C4018: '<=': signed/unsigned mismatch
-C:\Users\s221097\Documents\GitHub\cppRepo\Assessments\AT2\AT2 DEBUG (Raylib Sample Project)\RaylibStarterCPP\DataFile.cpp(131,20): warning C4018: '<': signed/unsigned mismatch
-  main.cpp
-  Generating Code...
+C:\Users\s221097\Documents\GitHub\cppRepo\Assessments\AT2\AT2 DEBUG (Raylib Sample Project)\RaylibStarterCPP\DataFile.cpp(37,20): warning C4244: '=': conversion from 'std::streamoff' to 'int', possible loss of data
+C:\Users\s221097\Documents\GitHub\cppRepo\Assessments\AT2\AT2 DEBUG (Raylib Sample Project)\RaylibStarterCPP\DataFile.cpp(41,22): warning C4244: '=': conversion from 'std::streamoff' to 'int', possible loss of data
+C:\Users\s221097\Documents\GitHub\cppRepo\Assessments\AT2\AT2 DEBUG (Raylib Sample Project)\RaylibStarterCPP\DataFile.cpp(43,22): warning C4244: '=': conversion from 'std::streamoff' to 'int', possible loss of data
   RaylibStarterCPP.vcxproj -> C:\Users\s221097\Documents\GitHub\cppRepo\Assessments\AT2\AT2 DEBUG (Raylib Sample Project)\bin\Win32\Debug\AT2 DEBUG.exe
