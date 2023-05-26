@@ -10,9 +10,9 @@ DataFile::DataFile()
 
 DataFile::~DataFile()
 {
-	Clear(); //clears the records
+	Clear(); //clear the records
 }
-//
+
 //void DataFile::AddRecord(string imageFilename, string name, int age)
 //{
 //	Image i = LoadImage(imageFilename.c_str()); //loads an image to save to the record
@@ -28,64 +28,58 @@ DataFile::~DataFile()
 
 DataFile::Record* DataFile::GetRecord(int index) //gets the record via an index value -- needs to be changed as it hold all records in memory and crashes when a record cannot be obtained
 {
-	int filesize = 0;
-	int width = 0, height = 0;
-	int imageSize = 0, nameSize = 0, ageSize = 0;
-	int seekPos = 0;
+	//temporary vars to hold data about the size of vars
+	int nameSize = 0;
+	int ageSize = 0;
+	int width = 0, height = 0, format = 0, imageSize = 0;
+	 
+	//open the file and get the correct position to start reading from
+	ifstream infile("npc_data.dat", ios::in | ios::binary);
+	infile.seekg(currentPos[index], ios::beg);
 
-	ifstream f("npc_data.dat", ios::in | ios::binary);
-	Record* temp = new Record();
-
-	f.seekg(0, f.end);
-	filesize = (int)f.tellg();
-	f.seekg(0, f.beg);
-
-	vector<char> buffer(filesize);
-	f.read(&buffer[0], filesize);
-
-	f.seekg(4, f.beg);
-	f.seekg(index * 262167, f.cur); //img 1 = 4; img 2 = 262171; img 3 = 524340; img 4 = 786515; img 5 = 1048693
+	//read the height & width of the image
+	infile.read((char*)&width, sizeof(int));
+	infile.read((char*)&height, sizeof(int));
 	
-	seekPos = (int)f.tellg();
-	
-	f.read((char*)&width, sizeof(int));
-	f.read((char*)&height, sizeof(int));
-
+	//calculate size
 	imageSize = sizeof(Color) * width * height;
-	
-	f.read((char*)&nameSize, sizeof(int));
-	f.read((char*)&ageSize, sizeof(int));
 
-	char* imgDat = new char[imageSize + 1];
-	imgDat[imageSize] = '\0';
-	f.read((char*)imgDat, imageSize);
-	
-	Image image = LoadImageEx((Color*)imgDat, width, height);
+	//read name and age size
+	infile.read((char*)&nameSize, sizeof(int));
+	infile.read((char*)&ageSize, sizeof(int));
 
-	char* name = new char[nameSize + 1];
-	name[nameSize] = '\0'; // \0 denotes a null terminator, which marks the end of a string.
+	//create char* for the image data and read it from file
+	char* imgdata = new char[imageSize];
+	infile.read(imgdata, imageSize);
+	
+	//create the image
+	Image img = LoadImageEx((Color*)imgdata, width, height);
+
+	//create a char* for the name and an int for age
+	char* name = new char[nameSize + 1]; //adds an extra byte to the namesize to show the end of the string
+	name[nameSize] = '\0'; // \0 = null terminator; denotes the end of a string;
 	int age = 0;
 
-	f.read((char*)name, nameSize);
-	f.read((char*)&age, ageSize);
-	
-	temp->image = image;
-	temp->name = string(name);
-	temp->age = age;
+	//reads the name and age from the file
+	infile.read((char*)name, nameSize);
+	infile.read((char*)&age, ageSize);
 
-	cout << "\nFile Size in Bytes: " << filesize << "\n";
-	cout << "\nIndex: " << index << "\n";
-	cout << "\nSeek Position: " << seekPos << "\n";
+	//creates a record to send back to main to be displayed
+	Record* r = new Record();
+	r->image = img;
+	r->name = string(name);
+	r->age = age;
 
-	imgDat = nullptr;
+	//sets pointers to null and deletes them
+	imgdata = nullptr;
 	name = nullptr;
 
-	delete[] imgDat;
+	delete[] imgdata;
 	delete[] name;
 
-	f.close();
-	
-	return temp;
+	infile.close();
+
+	return r;
 }
 
 //void DataFile::Save(string filename)
@@ -121,19 +115,30 @@ DataFile::Record* DataFile::GetRecord(int index) //gets the record via an index 
 
 void DataFile::Load(string filename, int index)
 {
-	//Clear(); //clears the records vector
+	Clear();
 
-	ifstream infile(filename, ios::in | ios::binary);
+	//open the file
+	ifstream infile(filename, ios::in | ios::binary); 
 
-	recordCount = 0; //resets recordcount
+	//resets record count; reads the first int and sets the record count accordingly
+	recordCount = 0;
 	infile.read((char*)&recordCount, sizeof(int));
 
-		//CREATE TEMP VARS
+	//for each record, pushes back the current position within the record
+	for (int i = 0; i < recordCount + 1; i++) {
+		currentPos.push_back(0);
+	}
+	//sets the first position in 4 bytes so you aren't reading invalid data
+	currentPos[0] = sizeof(int);
+
+	//main loop; rund through the record to set the size of each index and set their locations
+	for (int j = 1; j < recordCount + 1; j++) {
+		//Temporary variables
 		int nameSize = 0;
 		int ageSize = 0;
 		int width = 0, height = 0, format = 0, imageSize = 0;
 
-		//READ VALUES AND SET THEM
+		//reading variables
 		infile.read((char*)&width, sizeof(int));
 		infile.read((char*)&height, sizeof(int));
 
@@ -142,40 +147,20 @@ void DataFile::Load(string filename, int index)
 		infile.read((char*)&nameSize, sizeof(int));
 		infile.read((char*)&ageSize, sizeof(int));
 
-		char* imgdata = new char[imageSize];
-		infile.read(imgdata, imageSize);
+		//creates a var to hold the size of each record chunk, and gets the current location of each record
+		int recordSize = imageSize + nameSize + ageSize;
+		int location = infile.tellg();
 
-		Image img = LoadImageEx((Color*)imgdata, width, height);
-		char* name = new char[nameSize + 1]; //
-		name[nameSize] = '\0'; // \0 denotes a null terminator, which marks the end of a string.
-		int age = 0;
-
-		infile.read((char*)name, nameSize);
-		infile.read((char*)&age, ageSize);
-
-		//CREATE RECORD 
-		Record* r = new Record();
-		r->image = img;
-		r->name = string(name);
-		r->age = age;
-		//records.push_back(r);
-
-		//cout << "NAME: " << r->name << "\n" << "AGE: " << r->age << "\n";
-		//cout << "NAME SIZE: " << nameSize << "\n" << "AGE SIZE: " << ageSize << "\n\n";
-
-		delete [] imgdata;
-		delete [] name;
-
+		//sets the location by bumping it up from current position + the record chunk size
+		infile.seekg(recordSize, infile.cur);
+		currentPos[j] = location + recordSize;
+	}
+	//closes the file
 	infile.close();
 }
 
-
 void DataFile::Clear()
 {
-	//for (int i = 0; i < records.size(); i++)
-	//{
-	//	delete records[i];
-	//}
-	//records.clear();
+	//resets the record count
 	recordCount = 0;
 }

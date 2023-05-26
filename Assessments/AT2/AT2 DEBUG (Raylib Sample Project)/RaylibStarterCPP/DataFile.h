@@ -8,6 +8,7 @@ using namespace std;
 
 class DataFile
 {
+	//defines the Record
 public:
 	struct Record {
 		Image image;
@@ -16,12 +17,14 @@ public:
 	};
 
 private:
+	//record count: how many records are within the data
 	int recordCount;
 	//std::vector<Record*> records;	// delete this vector. Load only the required record 
 
 
 
 public:
+	//initialization of methods
 	DataFile();
 	~DataFile();
 
@@ -34,6 +37,9 @@ public:
 
 	void Save(string filename);
 	void Load(string filename, int index);
+
+	//vector to hold the position of each record
+	vector<int>currentPos;
 
 private:
 	void Clear();

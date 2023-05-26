@@ -1,8 +1,0 @@
-﻿  AT2_BinaryFile.cpp
-  DataFile.cpp
-C:\Users\s221097\Documents\GitHub\cppRepo\Assessments\AT2\AT2_BinaryFile\AT2_BinaryFile\DataFile.cpp(37,34): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\s221097\Documents\GitHub\cppRepo\Assessments\AT2\AT2_BinaryFile\AT2_BinaryFile\DataFile.cpp(42,20): error C3861: 'GetImageData': identifier not found
-C:\Users\s221097\Documents\GitHub\cppRepo\Assessments\AT2\AT2_BinaryFile\AT2_BinaryFile\DataFile.cpp(45,43): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\s221097\Documents\GitHub\cppRepo\Assessments\AT2\AT2_BinaryFile\AT2_BinaryFile\DataFile.cpp(88,15): error C3861: 'LoadImageEx': identifier not found
-  main.cpp
-  Generating Code...

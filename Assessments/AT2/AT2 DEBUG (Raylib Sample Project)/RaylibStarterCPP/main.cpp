@@ -34,6 +34,7 @@ int main(int argc, char* argv[])
     DataFile data;
     int currentRecordIdx = 0;
 
+    //initial load;
     data.Load("npc_data.dat", currentRecordIdx);
 
     DataFile::Record* currentRecord = data.GetRecord(currentRecordIdx);
@@ -69,7 +70,6 @@ int main(int argc, char* argv[])
             if (currentRecordIdx >= data.GetRecordCount())
             {
                 currentRecordIdx = data.GetRecordCount() - 1; //arrays start at 0, so recordCount was returning with a null value causing the program to freak out
-                //currentRecordIdx--; //same as ^^, but without touching the GetRecordCount() method
             }
             currentRecord = data.GetRecord(currentRecordIdx); //this will cause a crash when recieving an invalid index
             recordTexture = LoadTextureFromImage(currentRecord->image);
@@ -80,6 +80,7 @@ int main(int argc, char* argv[])
         //----------------------------------------------------------------------------------
         BeginDrawing();
 
+        //draws a clear background, the image, the name, and the age;
         ClearBackground(RAYWHITE);
 
         DrawTexture(recordTexture, 300, 50, WHITE);
