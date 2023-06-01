@@ -1,0 +1,23 @@
+/NOLOGO
+/errorReport:prompt
+/MACHINE:x64
+/SUBSYSTEM:WINDOWS
+/DEF
+/NAME:"UE4Editor-BPandCPP.dll"
+/IGNORE:4221
+/NODEFAULTLIB
+"C:\Users\s221097\Documents\GitHub\cppRepo\Sample Stuff\UE4 Projects\BPandCPP\Intermediate\Build\Win64\BPandCPPEditor\Development\Engine\SharedPCH.Engine.h.obj"
+"C:\Users\s221097\Documents\GitHub\cppRepo\Sample Stuff\UE4 Projects\BPandCPP\Intermediate\Build\Win64\UE4Editor\Development\BPandCPP\First.cpp.obj"
+"C:\Users\s221097\Documents\GitHub\cppRepo\Sample Stuff\UE4 Projects\BPandCPP\Intermediate\Build\Win64\UE4Editor\Development\BPandCPP\LightTrigger_01.cpp.obj"
+"C:\Users\s221097\Documents\GitHub\cppRepo\Sample Stuff\UE4 Projects\BPandCPP\Intermediate\Build\Win64\UE4Editor\Development\BPandCPP\LightTrigger_02.cpp.obj"
+"C:\Users\s221097\Documents\GitHub\cppRepo\Sample Stuff\UE4 Projects\BPandCPP\Intermediate\Build\Win64\UE4Editor\Development\BPandCPP\LightTrigger_03.cpp.obj"
+"C:\Users\s221097\Documents\GitHub\cppRepo\Sample Stuff\UE4 Projects\BPandCPP\Intermediate\Build\Win64\UE4Editor\Development\BPandCPP\Sample_01.cpp.obj"
+"C:\Users\s221097\Documents\GitHub\cppRepo\Sample Stuff\UE4 Projects\BPandCPP\Intermediate\Build\Win64\UE4Editor\Development\BPandCPP\BPandCPP.cpp.obj"
+"C:\Users\s221097\Documents\GitHub\cppRepo\Sample Stuff\UE4 Projects\BPandCPP\Intermediate\Build\Win64\UE4Editor\Development\BPandCPP\BPandCPP.init.gen.cpp.obj"
+"C:\Users\s221097\Documents\GitHub\cppRepo\Sample Stuff\UE4 Projects\BPandCPP\Intermediate\Build\Win64\UE4Editor\Development\BPandCPP\First.gen.cpp.obj"
+"C:\Users\s221097\Documents\GitHub\cppRepo\Sample Stuff\UE4 Projects\BPandCPP\Intermediate\Build\Win64\UE4Editor\Development\BPandCPP\LightTrigger_01.gen.cpp.obj"
+"C:\Users\s221097\Documents\GitHub\cppRepo\Sample Stuff\UE4 Projects\BPandCPP\Intermediate\Build\Win64\UE4Editor\Development\BPandCPP\LightTrigger_02.gen.cpp.obj"
+"C:\Users\s221097\Documents\GitHub\cppRepo\Sample Stuff\UE4 Projects\BPandCPP\Intermediate\Build\Win64\UE4Editor\Development\BPandCPP\LightTrigger_03.gen.cpp.obj"
+"C:\Users\s221097\Documents\GitHub\cppRepo\Sample Stuff\UE4 Projects\BPandCPP\Intermediate\Build\Win64\UE4Editor\Development\BPandCPP\Sample_01.gen.cpp.obj"
+"C:\Users\s221097\Documents\GitHub\cppRepo\Sample Stuff\UE4 Projects\BPandCPP\Intermediate\Build\Win64\UE4Editor\Development\BPandCPP\Default.rc2.res"
+/OUT:"C:\Users\s221097\Documents\GitHub\cppRepo\Sample Stuff\UE4 Projects\BPandCPP\Intermediate\Build\Win64\UE4Editor\Development\BPandCPP\UE4Editor-BPandCPP.lib"

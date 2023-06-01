@@ -1,0 +1,14 @@
+{
+	"Targets": [
+		{
+			"Name": "BPandCPP",
+			"Path": "C:\\Users\\s221097\\Documents\\GitHub\\cppRepo\\Sample Stuff\\UE4 Projects\\BPandCPP\\Source\\BPandCPP.Target.cs",
+			"Type": "Game"
+		},
+		{
+			"Name": "BPandCPPEditor",
+			"Path": "C:\\Users\\s221097\\Documents\\GitHub\\cppRepo\\Sample Stuff\\UE4 Projects\\BPandCPP\\Source\\BPandCPPEditor.Target.cs",
+			"Type": "Editor"
+		}
+	]
+}

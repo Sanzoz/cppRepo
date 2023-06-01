@@ -1,0 +1,3 @@
+C:\Users\s221097\Documents\GitHub\cppRepo\Sample Stuff\UE4 Projects\BPandCPP\Intermediate\Build\Win64\UE4Editor\Development\BPandCPP\Definitions.BPandCPP.h
+C:\Users\s221097\Documents\GitHub\cppRepo\Sample Stuff\UE4 Projects\BPandCPP\Source\BPandCPP\Public\First.h
+C:\Users\s221097\Documents\GitHub\cppRepo\Sample Stuff\UE4 Projects\BPandCPP\Intermediate\Build\Win64\UE4Editor\Inc\BPandCPP\First.generated.h

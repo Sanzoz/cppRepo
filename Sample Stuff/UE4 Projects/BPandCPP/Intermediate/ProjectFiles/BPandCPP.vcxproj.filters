@@ -1,0 +1,81 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <None Include="..\..\BPandCPP.uproject" />
+    <Filter Include="Source">
+      <UniqueIdentifier>{75136566-5328-4764-8825-A9BA6204E07D}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\BPandCPP.Target.cs">
+      <Filter>Source</Filter>
+    </None>
+    <None Include="..\..\Source\BPandCPPEditor.Target.cs">
+      <Filter>Source</Filter>
+    </None>
+    <Filter Include="Config">
+      <UniqueIdentifier>{83793996-9553-40D8-930D-9BFC7314AD22}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Config\DefaultEditor.ini">
+      <Filter>Config</Filter>
+    </None>
+    <None Include="..\..\Config\DefaultEditorPerProjectUserSettings.ini">
+      <Filter>Config</Filter>
+    </None>
+    <None Include="..\..\Config\DefaultEngine.ini">
+      <Filter>Config</Filter>
+    </None>
+    <None Include="..\..\Config\DefaultGame.ini">
+      <Filter>Config</Filter>
+    </None>
+    <None Include="..\..\Config\DefaultInput.ini">
+      <Filter>Config</Filter>
+    </None>
+    <Filter Include="Source\BPandCPP">
+      <UniqueIdentifier>{119001C2-671D-49F2-813E-2AE8F6F80430}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\BPandCPP\BPandCPP.Build.cs">
+      <Filter>Source\BPandCPP</Filter>
+    </None>
+    <ClCompile Include="..\..\Source\BPandCPP\BPandCPP.cpp">
+      <Filter>Source\BPandCPP</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\BPandCPP\BPandCPP.h">
+      <Filter>Source\BPandCPP</Filter>
+    </ClInclude>
+    <Filter Include="Source\BPandCPP\Private">
+      <UniqueIdentifier>{0006F4B3-22EC-48C7-97DC-248B348B57BF}</UniqueIdentifier>
+    </Filter>
+    <ClCompile Include="..\..\Source\BPandCPP\Private\First.cpp">
+      <Filter>Source\BPandCPP\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\BPandCPP\Private\LightTrigger_01.cpp">
+      <Filter>Source\BPandCPP\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\BPandCPP\Private\LightTrigger_02.cpp">
+      <Filter>Source\BPandCPP\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\BPandCPP\Private\LightTrigger_03.cpp">
+      <Filter>Source\BPandCPP\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\BPandCPP\Private\Sample_01.cpp">
+      <Filter>Source\BPandCPP\Private</Filter>
+    </ClCompile>
+    <Filter Include="Source\BPandCPP\Public">
+      <UniqueIdentifier>{57E4ECFA-6E88-4B01-BB1D-10B4E0358E1D}</UniqueIdentifier>
+    </Filter>
+    <ClInclude Include="..\..\Source\BPandCPP\Public\First.h">
+      <Filter>Source\BPandCPP\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\BPandCPP\Public\LightTrigger_01.h">
+      <Filter>Source\BPandCPP\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\BPandCPP\Public\LightTrigger_02.h">
+      <Filter>Source\BPandCPP\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\BPandCPP\Public\LightTrigger_03.h">
+      <Filter>Source\BPandCPP\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\BPandCPP\Public\Sample_01.h">
+      <Filter>Source\BPandCPP\Public</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

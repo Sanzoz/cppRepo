@@ -10,5 +10,6 @@ public:
 	float speed;
 	float shipSize;
 	float collisionRad;
+	int lifeCount;
 	Color color;
 };

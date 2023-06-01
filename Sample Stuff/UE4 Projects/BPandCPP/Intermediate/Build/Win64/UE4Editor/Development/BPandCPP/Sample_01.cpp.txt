@@ -1,0 +1,9 @@
+C:\Users\s221097\Documents\GitHub\cppRepo\Sample Stuff\UE4 Projects\BPandCPP\Intermediate\Build\Win64\UE4Editor\Development\BPandCPP\Definitions.BPandCPP.h
+C:\Users\s221097\Documents\GitHub\cppRepo\Sample Stuff\UE4 Projects\BPandCPP\Source\BPandCPP\Public\Sample_01.h
+C:\Program Files\Epic Games\UE_4.27\Engine\Source\Runtime\Engine\Classes\Components/BoxComponent.h
+C:\Program Files\Epic Games\UE_4.27\Engine\Source\Runtime\Engine\Classes\Components/ShapeComponent.h
+C:\Program Files\Epic Games\UE_4.27\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\ShapeComponent.generated.h
+C:\Program Files\Epic Games\UE_4.27\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\BoxComponent.generated.h
+C:\Program Files\Epic Games\UE_4.27\Engine\Source\Runtime/Engine/Classes/Components/TextRenderComponent.h
+C:\Program Files\Epic Games\UE_4.27\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\TextRenderComponent.generated.h
+C:\Users\s221097\Documents\GitHub\cppRepo\Sample Stuff\UE4 Projects\BPandCPP\Intermediate\Build\Win64\UE4Editor\Inc\BPandCPP\Sample_01.generated.h

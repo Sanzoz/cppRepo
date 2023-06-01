@@ -20,7 +20,7 @@ static bool victory;
 static bool debugActive;
 
 static int asteroidsDestroyed = 0;
-static int asteroidsRequired = 63;
+static int asteroidsRequired = 64;
 
 static int smolAsteroidsCount = smolAsteroidAmount;
 static int asteroidsCount = asteroidAmount;

@@ -29,7 +29,7 @@ int main(int argc, char** argv)
 
 int MinValue(const int* arr, int count)
 {
-	int num = arr[4]; //sets to the highest value in the array for testing
+	int num = arr[count - 1]; //sets to the highest value in the array for testing
 
 	for (int i = 0; i < count; i++) { //loops through to find the lowest value, and sets 'num' to that
 		if (num > arr[i]) {

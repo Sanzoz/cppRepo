@@ -1,0 +1,8 @@
+{
+	"SourceFiles": [
+		"C:\\Users\\s221097\\Documents\\GitHub\\cppRepo\\Sample Stuff\\UE4 Projects\\BPandCPP\\Source\\BPandCPP\\BPandCPP.Build.cs",
+		"C:\\Users\\s221097\\Documents\\GitHub\\cppRepo\\Sample Stuff\\UE4 Projects\\BPandCPP\\Source\\BPandCPP.Target.cs",
+		"C:\\Users\\s221097\\Documents\\GitHub\\cppRepo\\Sample Stuff\\UE4 Projects\\BPandCPP\\Source\\BPandCPPEditor.Target.cs"
+	],
+	"EngineVersion": "4.27.2"
+}

@@ -66,13 +66,13 @@ void Update() {
 		case(31): if (tailCounter == 31 && gameSpeed == 8) gameSpeed = 7;
 		case(41): if (tailCounter == 41 && gameSpeed == 7) gameSpeed = 6;
 		case(51): if (tailCounter == 51 && gameSpeed == 6) gameSpeed = 5;
-		}		// ^^ if statement double checks the switch case, and makes sure the snake is the correct size
+		}		//if statement double checks the switch case, and makes sure the snake is the correct size
 
 		//SNAKE MOVEMENT -- Uses speed from inputs and moves each index within the snake array in the correct direction
 		for (int i = 0; i < tailCounter; i++) snakePos[i] = snake[i].position; //sets the tails to follow the snake and moves them
 
-		if ((framesCounter % gameSpeed) == 0) { // "(framesCounter % 6) == 0" sets the speed of the games updates by waiting until 
-			for (int i = 0; i < tailCounter; i++) { // the remainder of frames passed is 0. once it is 0, it updates the snake and checks for collision
+		if ((framesCounter % gameSpeed) == 0) { // "(framesCounter % gameSpeed) == 0" sets the speed of the game -- waits for a number of frames to pass before updating everything
+			for (int i = 0; i < tailCounter; i++) {
 				if (i == 0) {
 					snake[0].position.x += snake[0].direction.x; //moves snake based on speed x
 					snake[0].position.y += snake[0].direction.y; //moves snake based on speed y
@@ -133,7 +133,7 @@ void Draw() {
 		for (int i = 0; i < screenW / tileSize + 2; i++) {
 			DrawLineV(Vector2{ tileSize * i + offset.x / 2, offset.y / 2 }, Vector2{ tileSize * i + offset.x / 2, screenH - offset.y / 2 }, LIGHTERGRAY);
 		}
-		for (int i = 0; i < screenW / tileSize + 2; i++) {
+		for (int i = 0; i < screenH / tileSize + 2; i++) {
 			DrawLineV(Vector2{ offset.x / 2, tileSize * i + offset.y / 2 }, Vector2{ screenW - offset.x / 2, tileSize * i + offset.y / 2 }, LIGHTERGRAY);
 		}
 

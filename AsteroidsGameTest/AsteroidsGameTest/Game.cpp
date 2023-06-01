@@ -30,6 +30,7 @@ void Initialise() {
 	player.collisionRad = 12;
 	player.acceleration = 0;
 	player.rotation = 0;
+	player.lifeCount = 3;
 	player.color = MALACHITE;
 
 	//SHOOTING INITIALISATION
@@ -59,7 +60,7 @@ void Initialise() {
 		asteroid[i].color = EVENLIGHTERGRAY;
 	}
 	for (int i = 0; i < chonkAsteroidAmount; i++) {
-		randX = GetRandomValue(0, screenW);
+		randX = GetRandomValue(0, screenW); //gets 2 random values and sets them as the direction to travel
 		while (!validDir) {
 			if (randX > screenW / 2 - 50 && randX < screenW / 2 + 50) randX = GetRandomValue(0, screenW);
 			else validDir = true;
@@ -117,9 +118,9 @@ void Update() {
 			else {
 				if (player.acceleration > 0) player.acceleration -= 0.04f;
 				else if (player.acceleration < 0) player.acceleration = 0; //if the acceleration is lower than 0, set to 0
-			}																//prevents ship from gliding backwards
+			}															   //prevents ship from gliding backwards when you stop accelerating
 			if (IsKeyDown(KEY_DOWN)) {
-
+				//force slows the ship
 				if (player.acceleration > 0) player.acceleration -= 0.08f;
 				else if (player.acceleration < 0) player.acceleration = 0;
 			}
@@ -139,76 +140,70 @@ void Update() {
 			}
 
 			//PLAYER WALL COLLISION -- if you hit a wall, move to the opposite side
+			//if the player hits the wall, move them to the opposite side
 			if (player.position.x > screenW + player.shipSize) player.position.x = -(player.shipSize);
 			else if (player.position.x < -player.shipSize) player.position.x = screenW + player.shipSize;
 			if (player.position.y > screenH + player.shipSize) player.position.y = -(player.shipSize);
 			else if (player.position.y < -player.shipSize) player.position.y = screenH + player.shipSize;
 
-			//SHOT WALL COLLISION -- if your shot hits a wall, delete the projectile
+			//SHOT WALL COLLISION -- if your shot hits a wall, wrap it around
 			for (int i = 0; i < maxShots; i++) {
 				if (shoot[i].active) {
-					if (shoot[i].position.x > GetScreenWidth() + shoot[i].radius || shoot[i].position.x < 0 + shoot[i].radius ||
-						shoot[i].position.y > GetScreenHeight() + shoot[i].radius || shoot[i].position.y < 0 + shoot[i].radius) {
-
-						shoot[i].active = false;
-					}
+					if (shoot[i].position.x > screenW + shoot[i].radius) shoot[i].position.x = -shoot[i].radius;
+					else if (shoot[i].position.x < 0 + shoot[i].radius) shoot[i].position.x = screenW + shoot[i].radius;
+					if (shoot[i].position.y > screenH + shoot[i].radius) shoot[i].position.y = -shoot[i].radius;
+					else if (shoot[i].position.y < 0 + shoot[i].radius) shoot[i].position.y = screenH + shoot[i].radius;
 				}
 			}
 
 			//ASTEROID MOVEMENT AND WALL COLLISION -- Asteroids go weeeeeEEEEEEEEE and when the asteroid hits a wall, loop around like the player
 			for (int i = 0; i < smolAsteroidMax; i++) {
 				if (smolAsteroid[i].active) {
-
+					//moves the asteroid in the chosen direction
 					smolAsteroid[i].position.x += smolAsteroid[i].direction.x;
 					smolAsteroid[i].position.y -= smolAsteroid[i].direction.y;
-
+					
+					//teleports the asteroid to the opposite side when hitting the sides of the screen
 					if (smolAsteroid[i].position.x > screenW + smolAsteroid[i].radius)
 						smolAsteroid[i].position.x = -(smolAsteroid[i].radius);
-
 					else if (smolAsteroid[i].position.x < -smolAsteroid[i].radius)
 						smolAsteroid[i].position.x = screenW + smolAsteroid[i].radius;
-
 					if (smolAsteroid[i].position.y > screenH + smolAsteroid[i].radius)
 						smolAsteroid[i].position.y = -(smolAsteroid[i].radius);
-
 					else if (smolAsteroid[i].position.y < -smolAsteroid[i].radius)
 						smolAsteroid[i].position.y = screenH + smolAsteroid[i].radius;
 				}
 			}
 			for (int i = 0; i < asteroidMax; i++) {
 				if (asteroid[i].active) {
-
+					//moves the asteroid in the chosen direction
 					asteroid[i].position.x += asteroid[i].direction.x;
 					asteroid[i].position.y -= asteroid[i].direction.y;
 
+					//teleports the asteroid to the opposite side when hitting the sides of the screen
 					if (asteroid[i].position.x > screenW + asteroid[i].radius)
 						asteroid[i].position.x = -(asteroid[i].radius);
-
 					else if (asteroid[i].position.x < -asteroid[i].radius)
 						asteroid[i].position.x = screenW + asteroid[i].radius;
-
 					if (asteroid[i].position.y > screenH + asteroid[i].radius)
 						asteroid[i].position.y = -(asteroid[i].radius);
-
 					else if (asteroid[i].position.y < -asteroid[i].radius)
 						asteroid[i].position.y = screenH + asteroid[i].radius;
 				}
 			}
 			for (int i = 0; i < chonkAsteroidMax; i++) {
 				if (chonkAsteroid[i].active) {
-
+					//moves the asteroid in the chosen direction
 					chonkAsteroid[i].position.x += chonkAsteroid[i].direction.x;
 					chonkAsteroid[i].position.y -= chonkAsteroid[i].direction.y;
 
+					//teleports the asteroid to the opposite side when hitting the sides of the screen
 					if (chonkAsteroid[i].position.x > screenW + chonkAsteroid[i].radius)
 						chonkAsteroid[i].position.x = -(chonkAsteroid[i].radius);
-
 					else if (chonkAsteroid[i].position.x < -chonkAsteroid[i].radius)
 						chonkAsteroid[i].position.x = screenW + chonkAsteroid[i].radius;
-
 					if (chonkAsteroid[i].position.y > screenH + chonkAsteroid[i].radius)
 						chonkAsteroid[i].position.y = -(chonkAsteroid[i].radius);
-
 					else if (chonkAsteroid[i].position.y < -chonkAsteroid[i].radius)
 						chonkAsteroid[i].position.y = screenH + chonkAsteroid[i].radius;
 				}
@@ -235,11 +230,13 @@ void Update() {
 
 							for (int l = temp; l < target; l++) {
 								smolAsteroid[l].position = asteroid[n].position;
-								smolAsteroid[l].direction = Vector2{ cosf(shoot[i].rotation * PI / 180.0f) * 3 * -1, sinf(shoot[i].rotation * PI / 180.0f) * 3 * -1 };
+								//gets the direction to travel when split - 1 to go to the opposite direction, currently broken as it goes towards the player from some angles
+								smolAsteroid[l].direction = Vector2{ -cosf(shoot[i].rotation * PI / 180.0f) * 3, -sinf(shoot[i].rotation * PI / 180.0f) * 3};
 								smolAsteroid[l].active = true;
 								smolAsteroid[l].color = LIGHTRED;
 
 								smolAsteroid[l + 1].position = asteroid[n].position;
+								//gets the direction to travel when split
 								smolAsteroid[l + 1].direction = Vector2{ cosf(shoot[i].rotation * PI / 180.0f) * 3, sinf(shoot[i].rotation * PI / 180.0f) * 3 };
 								smolAsteroid[l + 1].active = true;
 								smolAsteroid[l + 1].color = LIGHTRED;
@@ -249,6 +246,7 @@ void Update() {
 						}
 					}
 					for (int m = 0; m < chonkAsteroidMax; m++) {
+						//checks collisions for the asteroid and bullet fired -- uses position of shot and radius of the asteroid
 						if (chonkAsteroid[m].active && CheckCollisionCircles(shoot[i].position, shoot[i].radius, chonkAsteroid[m].position, chonkAsteroid[m].radius)) {
 							shoot[i].active = false;
 							chonkAsteroid[m].active = false;
@@ -259,6 +257,7 @@ void Update() {
 
 							for (int l = temp; l < target; l++) {
 								asteroid[l].position = chonkAsteroid[m].position;
+								//same issue here, when it breaks from certain angles it splits towards the player rather than to the sides
 								asteroid[l].direction = Vector2{ cosf(shoot[i].rotation * PI / 180.0f) * 3 * -1, sinf(shoot[i].rotation * PI / 180.0f) * 3 * -1 };
 								asteroid[l].active = true;
 								asteroid[l].color = LIGHTORANGE;
@@ -275,8 +274,9 @@ void Update() {
 				}
 			}
 
-			//if an asteroid hits the player, kill them
+			//if an asteroid hits the player, kill them -- 3 of these cause I couldn't combine them without errors
 			for (int i = 0; i < smolAsteroidMax; i++) {
+				//checks the collision using circles, creates a circle around the bottom portion of the player, and checks if it overlaps with an asteroid
 				if (CheckCollisionCircles(Vector2{ player.position.x + sinf(player.rotation * PI / 180.0f) * (player.shipSize * 0.5f), player.position.y - cosf(player.rotation * PI / 180.0f) * (player.shipSize * 0.5f) },
 					player.collisionRad, smolAsteroid[i].position, smolAsteroid[i].radius) && smolAsteroid[i].active) gameOver = true;
 			}
@@ -292,8 +292,8 @@ void Update() {
 			//ROTATION -- That epic rotate yo
 			player.direction.x = sin(player.rotation * PI / 180.0f) * 1.2f;
 			player.direction.y = cos(player.rotation * PI / 180.0f) * 1.2f;
-			//facing direction ^^ -- dictates how where ship moves towards
 
+			//resets the player direction if it goes over a 360 / below -360
 			if (player.rotation > 360 || player.rotation < -360) player.rotation = 0;
 
 			//MOVEMENT -- Moving the ship forwards
@@ -306,12 +306,9 @@ void Update() {
 				if (shoot[i].active) {
 					shoot[i].position.x += shoot[i].direction.x;
 					shoot[i].position.y -= shoot[i].direction.y;
-
-					if (shoot[i].active) DrawText(TextFormat("SHOT ROTATION : %01i", smolAsteroidsCount), 50, 300 + (i * 10), 8, WHITE);
 				}
 			}
-
-
+			//victory condition: if you destroy enough asteroids, end the game
 			if (asteroidsDestroyed >= asteroidsRequired) victory = true;
 		}
 		else {
@@ -331,7 +328,6 @@ void Update() {
 	}
 }
 
-
 void Draw() {
 	BeginDrawing();
 
@@ -344,12 +340,15 @@ void Draw() {
 		Vector2 v3{ player.position.x + cosf(player.rotation * PI / 180.0f) * (player.shipSize * 0.7f), player.position.y + sinf(player.rotation * PI / 180.0f) * (player.shipSize * 0.7f) };
 
 		DrawTriangleLines(v1, v2, v3, player.color);
+		//mansplaining time on these calculations because I WILL forget what they do later.
 		//v1 calculates the tip of the triangle in a vector 2 by feeding the x pos + Sin(rotation * Pi / 180), then offsetting it by the shipsize. we multiple the shipsize by 2 
 		//to get a larger offset before doing the same thing with CoSine and the y position, this time subtracting the y pos to get a consistant triangle when rotating
-		//v2 calculates the left point in a Vector 2 by running rotation through CoSine and subtracting that from the position. the smaller multiplier is to get a ship that looks
-		//more similar to the original retro game one
-		//v3 calculates the same way v2 does, but now adding the position to the rotation calculations
-		//math hurts, and the calculations were adapted from https://stackoverflow.com/questions/3837266/finding-the-points-of-a-triangle-after-rotation 
+		//v2 calculates the left point in a Vector 2 by running rotation through CoSine and subtracting that from the position. the smaller multiplier is to reduce the width of the ship
+		//v3 calculates the same way v2 does, but now adds the position to the rotation calculations, rather than subtracts, and the smaller multi reduces the width
+		// finally, DrawTriangleLines draws lines between the 3 vectors using the players color. 
+		//math hurts. these calculations were adapted from https://stackoverflow.com/questions/3837266/finding-the-points-of-a-triangle-after-rotation 
+
+
 
 		//DRAW ASTEROIDS -- draws the Asteroids using the position
 		for (int i = 0; i < smolAsteroidMax; i++) {
