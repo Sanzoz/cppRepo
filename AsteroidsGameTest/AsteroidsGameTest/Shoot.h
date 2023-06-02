@@ -9,6 +9,7 @@ public:
 	float rotation;
 	float shotSpeed;
 	int bulletLife;
+	int lifeSpanMax;
 	bool active;
 	Color color;
 };

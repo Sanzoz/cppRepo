@@ -7,31 +7,11 @@ int main(int argc, char** argv)
 	const int NUM_NUMBERS = 5;
 	int numbers[NUM_NUMBERS] = { 10, 20, 30, 40, 50 };
 
-	bool ascending = false;
-	bool descending = false;
 	/*
 	TODO: Print each value of the array in order
 	Expected:
 		10, 20, 30, 40, 50,
 	*/
-	// Task1: Write your Code here
-	// ------------------------------------------------------------------------
-	//while (!ascending) {
-
-	//	ascending = true; //if sorted, this stays true and breaks the loop
-
-	//	for (int i = 0; i < NUM_NUMBERS - 1; i++) { //for loop
-
-	//		if (numbers[i] > numbers[i + 1]) {
-	//			int temp = numbers[i]; //temp int holds number for swapping
-	//			numbers[i] = numbers[i + 1]; //swaps indices
-	//			numbers[i + 1] = temp; 
-	//			ascending = false; //resets the loop
-	//		}
-	//	}
-	//}
-	//cout << "BUBBLESORT ASCENDING" << endl;
-
 	for (int i = 0; i < NUM_NUMBERS; i++) { //for loop
 		cout << "" << numbers[i] << ", "; //loops through and prints each indices' value
 	}
@@ -44,23 +24,7 @@ int main(int argc, char** argv)
 	*/
 	// Task 2: Write your Code here
 	// ------------------------------------------------------------------------
-	while (!descending) {
-
-		descending = true; //breaks loop if sorted
-
-		for (int i = 0; i < NUM_NUMBERS; i++) {
-
-			if (numbers[i] < numbers[i + 1]) {
-				int temp = numbers[i]; //temp int to hold number for swapping
-				numbers[i] = numbers[i + 1]; //swaps indices
-				numbers[i + 1] = temp;
-				descending = false; //resets loop
-			}
-		}
-	}
-	cout << "BUBBLESORT DESCENDING" << endl;
-
-	for (int i = 0; i < NUM_NUMBERS; i++) { 
+	for (int i = NUM_NUMBERS - 1; i > -1; i--) { 
 		cout << "" << numbers[i] << ", "; //loops through indices and prints them
 	}
 	// ------------------------------------------------------------------------
