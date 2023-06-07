@@ -1,10 +1,10 @@
 ﻿  Game.cpp
-C:\Users\s221097\Documents\GitHub\cppRepo\AsteroidsGameTest\AsteroidsGameTest\Game.cpp(392,101): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-C:\Users\s221097\Documents\GitHub\cppRepo\AsteroidsGameTest\AsteroidsGameTest\Game.cpp(392,73): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-C:\Users\s221097\Documents\GitHub\cppRepo\AsteroidsGameTest\AsteroidsGameTest\Game.cpp(395,89): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-C:\Users\s221097\Documents\GitHub\cppRepo\AsteroidsGameTest\AsteroidsGameTest\Game.cpp(395,65): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-C:\Users\s221097\Documents\GitHub\cppRepo\AsteroidsGameTest\AsteroidsGameTest\Game.cpp(398,104): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-C:\Users\s221097\Documents\GitHub\cppRepo\AsteroidsGameTest\AsteroidsGameTest\Game.cpp(398,75): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-C:\Users\s221097\Documents\GitHub\cppRepo\AsteroidsGameTest\AsteroidsGameTest\Game.cpp(420,122): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-C:\Users\s221097\Documents\GitHub\cppRepo\AsteroidsGameTest\AsteroidsGameTest\Game.cpp(420,38): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\s221097\Documents\GitHub\cppRepo\AsteroidsGameTest\AsteroidsGameTest\Game.cpp(464,100): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\s221097\Documents\GitHub\cppRepo\AsteroidsGameTest\AsteroidsGameTest\Game.cpp(464,72): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\s221097\Documents\GitHub\cppRepo\AsteroidsGameTest\AsteroidsGameTest\Game.cpp(467,88): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\s221097\Documents\GitHub\cppRepo\AsteroidsGameTest\AsteroidsGameTest\Game.cpp(467,64): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\s221097\Documents\GitHub\cppRepo\AsteroidsGameTest\AsteroidsGameTest\Game.cpp(470,103): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\s221097\Documents\GitHub\cppRepo\AsteroidsGameTest\AsteroidsGameTest\Game.cpp(470,74): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\s221097\Documents\GitHub\cppRepo\AsteroidsGameTest\AsteroidsGameTest\Game.cpp(491,122): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\s221097\Documents\GitHub\cppRepo\AsteroidsGameTest\AsteroidsGameTest\Game.cpp(491,38): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
   AsteroidsGameTest.vcxproj -> C:\Users\s221097\Documents\GitHub\cppRepo\AsteroidsGameTest\x64\Debug\AsteroidsGameTest.exe

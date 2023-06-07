@@ -136,6 +136,8 @@
   <ItemGroup>
     <ClInclude Include="Asteroids.h" />
     <ClInclude Include="CustomColours.h" />
+    <ClInclude Include="EnemyShip.h" />
+    <ClInclude Include="EnemyShoot.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="Player.h" />

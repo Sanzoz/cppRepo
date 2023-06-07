@@ -8,12 +8,14 @@ public:
 	float acceleration;
 	float speedMax;
 	float rotation;
-	float speed;
 	float shipSize;
 	float collisionRad;
 	int lifeCount;
+	int lifeMax;
 	int immunityTimer;
 	int score;
+	int livesGained;
 	bool hittable;
+	bool canGainLife;
 	Color color;
 };

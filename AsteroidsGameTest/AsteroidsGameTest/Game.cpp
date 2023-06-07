@@ -15,14 +15,17 @@ Asteroids asteroid[asteroidMax]{ 0 };
 Asteroids chonkAsteroid[chonkAsteroidMax]{ 0 };
 
 void Initialise() {
-	int randX, randY;
-	int dirX, dirY;
-	float rotX;
+	int randX = 0, randY = 0;
+	int dirX = 0, dirY = 0;
+	float rotX = 0;
 	bool validDir = false;
 
 	debugActive = false;
 	gameOver = false;
 	asteroidsDestroyed = 0;
+	chonkAsteroidAmount = 5;
+	asteroidAmount = 5;
+	smolAsteroidAmount = 5;
 
 	//PLAYER INITIALISATION
 	player.shipSize = 20;
@@ -30,23 +33,27 @@ void Initialise() {
 	player.direction = Vector2{ 0, 0 };
 	player.collisionRad = 12;
 	player.acceleration = 0;
-	player.speedMax = 5.5f;
+	player.speedMax = 6.5f;
 	player.rotation = 0;
+	player.score = 0;
+	player.livesGained = 1;
 	player.lifeCount = 4;
+	player.lifeMax = 6;
 	player.immunityTimer = 120;
 	player.hittable = false;
+	player.canGainLife = false;
 	player.color = MALACHITE;
 
 	//SHOOTING INITIALISATION
 	for (int i = 0; i < maxShots; i++) {
 		shoot[i].position = Vector2{ 0, 0 };
 		shoot[i].direction = Vector2{ 0, 0 };
-		shoot[i].radius = 3.5f;
+		shoot[i].radius = 2.5f;
 		shoot[i].shotSpeed = 7.5f;
 		shoot[i].active = false;
 		shoot[i].bulletLife = 0;
 		shoot[i].lifeSpanMax = 120;
-		shoot[i].color = WHITE;
+		shoot[i].color = LIGHTRED;
 	}
 
 	//ASTEROID INITIALISATION
@@ -54,29 +61,31 @@ void Initialise() {
 		smolAsteroid[i].position = Vector2{ -100, -100 };
 		smolAsteroid[i].direction = Vector2{ 0, 0 };
 		smolAsteroid[i].radius = 16;
-		smolAsteroid[i].rotateDirection = 0;
+		smolAsteroid[i].scoreIncrease = 25;
 		smolAsteroid[i].active = false;
 		smolAsteroid[i].color = LIGHTRED;
+		//smolAsteroid[i].image = LoadImage("smolAsteroid.png");
 	}
 	for (int i = 0; i < asteroidMax; i++) {
 		asteroid[i].position = Vector2{ -100, -100 };
 		asteroid[i].direction = Vector2{ 0, 0 };
 		asteroid[i].radius = 38;
-		asteroid[i].rotateDirection = 0;
+		asteroid[i].scoreIncrease = 100;
 		asteroid[i].active = false;
 		asteroid[i].color = LIGHTORANGE;
+		//asteroid[i].image = LoadImage("medAsteroid.png");
 	}
 	for (int i = 0; i < chonkAsteroidAmount; i++) {
 		randX = GetRandomValue(0, screenW); //gets 2 random values and sets them as the direction to travel
 		while (!validDir) {
-			if (randX > screenW / 2 - 50 && randX < screenW / 2 + 50) randX = GetRandomValue(0, screenW);
+			if (randX > screenW / 2 + 500 && randX < screenW / 2 + 500) randX = GetRandomValue(0, screenW);
 			else validDir = true;
 		}
 		validDir = false;
 
 		randY = GetRandomValue(0, screenH);
 		while (!validDir) {
-			if (randY > screenH / 2 - 50 && randY < screenH / 2 + 50) randY = GetRandomValue(0, screenH);
+			if (randY > screenH / 2 - 450 && randY < screenH / 2 + 450) randY = GetRandomValue(0, screenH);
 			else validDir = true;
 		}
 
@@ -97,13 +106,12 @@ void Initialise() {
 
 		validDir = false;
 
-		rotX = GetRandomValue(-50, 50);
-
 		chonkAsteroid[i].direction = Vector2{ (float)dirX, (float)dirY };
 		chonkAsteroid[i].radius = 68;
-		chonkAsteroid[i].rotateDirection = rotX;
+		chonkAsteroid[i].scoreIncrease = 250;
 		chonkAsteroid[i].active = true;
 		chonkAsteroid[i].color = LIGHTYELLOW;
+		//chonkAsteroid[i].image = LoadImage("chonkAsteroid.png");
 	}
 
 }
@@ -123,15 +131,17 @@ void Update() {
 			//PLAYER MOVEMENT INPUTS -- gets up and down keys and increases ships acceleration
 			//slows down the ship by default if no key is pressed by half the deceleration speed
 			if (IsKeyDown(KEY_UP)) {
-				if (player.acceleration < player.speedMax) player.acceleration += 0.4f;
+				if (player.acceleration < player.speedMax) player.acceleration += 0.20f;
+				player.direction.x = sin(player.rotation * PI / 180.0f) * 1.2f;
+				player.direction.y = cos(player.rotation * PI / 180.0f) * 1.2f;
 			}
 			else {
-				if (player.acceleration > 0) player.acceleration -= 0.04f;
+				if (player.acceleration > 0) player.acceleration -= 0.02f;
 				else if (player.acceleration < 0) player.acceleration = 0; //if the acceleration is lower than 0, set to 0
 			}															   //prevents ship from gliding backwards when you stop accelerating
 			if (IsKeyDown(KEY_DOWN)) {
 				//force slows the ship
-				if (player.acceleration > 0) player.acceleration -= 0.06f;
+				if (player.acceleration > 0) player.acceleration -= 0.08f;
 				else if (player.acceleration < 0) player.acceleration = 0;
 			}
 
@@ -151,18 +161,28 @@ void Update() {
 			}
 
 			//PLAYER WALL COLLISION -- if you hit a wall, move to the opposite side
-			if (player.position.x > screenW + player.shipSize) player.position.x = -(player.shipSize);
-			else if (player.position.x < -player.shipSize) player.position.x = screenW + player.shipSize;
-			if (player.position.y > screenH + player.shipSize) player.position.y = -(player.shipSize);
-			else if (player.position.y < -player.shipSize) player.position.y = screenH + player.shipSize;
+			if (player.position.x > screenW + 50 + player.shipSize) player.position.x = -(player.shipSize);
+			else if (player.position.x < -50 + -player.shipSize) player.position.x = screenW + player.shipSize;
+			if (player.position.y > screenH + 50 + player.shipSize) player.position.y = -(player.shipSize);
+			else if (player.position.y < -50 + -player.shipSize) player.position.y = screenH + player.shipSize;
 
-			//SHOT WALL COLLISION -- if your shot hits a wall, wrap it around
+			////SHOT WALL COLLISION -- if your shot hits a wall, wrap it around -- mostly used for fun
+			//for (int i = 0; i < maxShots; i++) {
+			//	if (shoot[i].active) {
+			//		if (shoot[i].position.x > screenW + shoot[i].radius) shoot[i].position.x = -shoot[i].radius;
+			//		else if (shoot[i].position.x < 0 + shoot[i].radius) shoot[i].position.x = screenW + shoot[i].radius;
+			//		if (shoot[i].position.y > screenH + shoot[i].radius) shoot[i].position.y = -shoot[i].radius;
+			//		else if (shoot[i].position.y < 0 + shoot[i].radius) shoot[i].position.y = screenH + shoot[i].radius;
+			//	}
+			//}
+
+			//SHOT WALL COLLISION 2 -- if your shot hits a wall, delete it
 			for (int i = 0; i < maxShots; i++) {
 				if (shoot[i].active) {
-					if (shoot[i].position.x > screenW + shoot[i].radius) shoot[i].position.x = -shoot[i].radius;
-					else if (shoot[i].position.x < 0 + shoot[i].radius) shoot[i].position.x = screenW + shoot[i].radius;
-					if (shoot[i].position.y > screenH + shoot[i].radius) shoot[i].position.y = -shoot[i].radius;
-					else if (shoot[i].position.y < 0 + shoot[i].radius) shoot[i].position.y = screenH + shoot[i].radius;
+					if (shoot[i].position.x > screenW + shoot[i].radius) shoot[i].active = false;
+					else if (shoot[i].position.x < 0 + shoot[i].radius) shoot[i].active = false;
+					if (shoot[i].position.y > screenH + shoot[i].radius) shoot[i].active = false;
+					else if (shoot[i].position.y < 0 + shoot[i].radius) shoot[i].active = false;
 				}
 			}
 
@@ -224,14 +244,16 @@ void Update() {
 							shoot[i].active = false;
 							chonkAsteroid[m].active = false;
 							asteroidsDestroyed++;
+							player.score += chonkAsteroid[m].scoreIncrease;
+							if (player.score >= (player.livesGained * gainLifeScore)) player.canGainLife = true;
 
 							for (int a = 0; a < 2; a++) {
 								if (asteroidsCount % 2 == 0) {
-									asteroid[asteroidsCount].position = Vector2{ chonkAsteroid[m].position.x, chonkAsteroid[m].position.y };
+									asteroid[asteroidsCount].position = Vector2{ chonkAsteroid[m].position.x + chonkAsteroid[i].radius / 2, chonkAsteroid[m].position.y + chonkAsteroid[i].radius / 2 };
 									asteroid[asteroidsCount].direction = Vector2{ cos(shoot[i].rotation * PI / 180) * 2, -sin(shoot[i].rotation * PI / 180) * 2};
 								}
 								else {
-									asteroid[asteroidsCount].position = Vector2{ chonkAsteroid[m].position.x, chonkAsteroid[m].position.y };
+									asteroid[asteroidsCount].position = Vector2{ chonkAsteroid[m].position.x + chonkAsteroid[i].radius / 2, chonkAsteroid[m].position.y + chonkAsteroid[i].radius / 2 };
 									asteroid[asteroidsCount].direction = Vector2{ -cos(shoot[i].rotation * PI / 180) * 2, sin(shoot[i].rotation * PI / 180) * 2};
 								}
 
@@ -246,6 +268,8 @@ void Update() {
 							shoot[i].active = false;
 							asteroid[m].active = false;
 							asteroidsDestroyed++;
+							player.score += asteroid[m].scoreIncrease;
+							if (player.score >= (player.livesGained * gainLifeScore)) player.canGainLife = true;
 
 							for (int a = 0; a < 2; a++) {
 								if (smolAsteroidsCount % 2 == 0) {
@@ -268,6 +292,44 @@ void Update() {
 							shoot[i].active = false;
 							smolAsteroid[m].active = false;
 							asteroidsDestroyed++;
+							player.score += smolAsteroid[m].scoreIncrease;
+							if (player.score >= (player.livesGained * gainLifeScore)) player.canGainLife = true;
+							asteroidSpawner++;
+
+							if (asteroidSpawner % 4 == 0) {
+								asteroidSpawner = 0;
+								
+								chonkAsteroidAmount++;
+								
+								for (int i = chonkAsteroidAmount + 1; i < chonkAsteroidAmount + 2; i++) {
+									if (chonkAsteroidAmount < chonkAsteroidMax) {
+										int randX, randY;
+										bool validDir = false;
+
+										randX = GetRandomValue(0, screenW); //gets 2 random values and sets them as the direction to travel
+										while (!validDir) {
+											if (randX > screenW / 2 - 500 && randX < screenW / 2 + 500) randX = GetRandomValue(0, screenW);
+											else validDir = true;
+										}
+										validDir = false;
+
+										randY = GetRandomValue(0, screenH);
+										while (!validDir) {
+											if (randY > screenH / 2 - 400 && randY < screenH / 2 + 400) randY = GetRandomValue(0, screenH);
+											else validDir = true;
+										}
+
+										chonkAsteroid[i].position = Vector2{ (float)randX, (float)randY };
+										chonkAsteroid[i].direction = Vector2{ (float)GetRandomValue(-3, 3), (float)GetRandomValue(-3, 3) };
+										if (chonkAsteroid[i].direction.x == 0 && chonkAsteroid[i].direction.y == 0) chonkAsteroid[i].direction = Vector2{ (float)GetRandomValue(-3, 3), (float)GetRandomValue(-3, 3) };
+
+										chonkAsteroid[i].radius = 68;
+										chonkAsteroid[i].color = LIGHTYELLOW;
+										chonkAsteroid[i].scoreIncrease = 250;
+										chonkAsteroid[i].active = true;
+									}
+								}
+							}
 						}
 					}
 				}
@@ -290,7 +352,7 @@ void Update() {
 					player.collisionRad, asteroid[i].position, asteroid[i].radius) && asteroid[i].active) {
 					if (player.hittable) {
 						player.hittable = false;
-						player.lifeCount -= 1;
+						player.lifeCount--;
 						player.immunityTimer = 120;
 					}
 				}
@@ -300,25 +362,28 @@ void Update() {
 					player.collisionRad, chonkAsteroid[i].position, chonkAsteroid[i].radius) && chonkAsteroid[i].active) {
 					if (player.hittable) {
 						player.hittable = false;
-						player.lifeCount -= 1;
+						player.lifeCount--;
 						player.immunityTimer = 120;
 					}
-				};
+				}
 			}
 
 			//ROTATION -- That epic rotate yo
-			player.direction.x = sin(player.rotation * PI / 180.0f) * 1.2f;
-			player.direction.y = cos(player.rotation * PI / 180.0f) * 1.2f;
+			/*player.direction.x = sin(player.rotation * PI / 180.0f) * 1.2f;
+			player.direction.y = cos(player.rotation * PI / 180.0f) * 1.2f;*/
 
 			//resets the player direction if it goes over a 360 / below -360
 			if (player.rotation > 360 || player.rotation < -360) player.rotation = 0;
 
-			//IMMUNITY -- so you dont just instantly die when getting bonked
-			if (player.immunityTimer <= 0) {
-				player.hittable = true;
-			}
-			else if (player.immunityTimer > 0) {
-				player.immunityTimer--;
+			//IMMUNITY -- so you dont just instantly die when getting bonked by an asteroid
+			if (player.immunityTimer <= 0) player.hittable = true;
+			else if (player.immunityTimer > 0) player.immunityTimer--;
+
+			//LIVES -- get lives when reaching a certain score threshold
+			if (player.score >= (player.livesGained * gainLifeScore) && player.canGainLife && player.lifeCount != player.lifeMax) {
+				player.lifeCount++;
+				player.livesGained++;
+				player.canGainLife = false;
 			}
 
 			//MOVEMENT -- Moving the ship forwards
@@ -337,7 +402,6 @@ void Update() {
 					shoot[i].active = false;
 				}
 			}
-			
 
 			//victory / game over condition: if you run out of lives, die | if you destroy the asteroids, win
 			if (asteroidsDestroyed >= asteroidsRequired) victory = true;
@@ -363,7 +427,9 @@ void Update() {
 void Draw() {
 	BeginDrawing();
 
-	ClearBackground(DARKERGRAY);
+	ClearBackground(DARKERDEEPBLUE);
+	DrawRectangle(0, 0, screenW, 300, DEEPBLUE);
+	DrawRectangle(0, 300, screenW, 300, DARKDEEPBLUE);
 
 	if (!gameOver) {
 		//DRAW PLAYER -- Draws the player based on math stuff to create a triangle
@@ -382,7 +448,7 @@ void Draw() {
 		//math hurts. these calculations were adapted from https://stackoverflow.com/questions/3837266/finding-the-points-of-a-triangle-after-rotation 
 
 		//SCORE & LIFE DISPLAY -- time to copy paste some math stuff
-		DrawText(TextFormat("SCORE: %01i", player.score), 50, 50, 20, WHITE);
+		DrawText(TextFormat("SCORE: %05i", player.score), 50, 50, 20, WHITE);
 
 		DrawText("LIVES: ", 210, 50, 20, WHITE);
 		for (int i = 0; i < player.lifeCount - 1; i++) {
@@ -393,15 +459,15 @@ void Draw() {
 			DrawTriangleLines(lv1, lv2, lv3, player.color);
 		}
 
-		//DRAW ASTEROIDS -- draws the Asteroids using the position
+		//DRAW ASTEROIDS -- draws the Asteroids as cicles using the position
 		for (int i = 0; i < smolAsteroidMax; i++) {
-			if (smolAsteroid[i].active) DrawEllipseLines(smolAsteroid[i].position.x, smolAsteroid[i].position.y, smolAsteroid[i].radius,smolAsteroid[i].radius * 1.2f, smolAsteroid[i].color);
+			if (smolAsteroid[i].active) DrawCircleLines(smolAsteroid[i].position.x, smolAsteroid[i].position.y, smolAsteroid[i].radius, smolAsteroid[i].color);
 		}
 		for (int i = 0; i < asteroidMax; i++) {
-			if (asteroid[i].active) DrawEllipseLines(asteroid[i].position.x, asteroid[i].position.y, asteroid[i].radius, asteroid[i].radius * 1.2f, asteroid[i].color);
+			if (asteroid[i].active) DrawCircleLines(asteroid[i].position.x, asteroid[i].position.y, asteroid[i].radius, asteroid[i].color);
 		}
 		for (int i = 0; i < chonkAsteroidMax; i++) {
-			if (chonkAsteroid[i].active) DrawEllipseLines(chonkAsteroid[i].position.x, chonkAsteroid[i].position.y, chonkAsteroid[i].radius, chonkAsteroid[i].radius * 1.2f, chonkAsteroid[i].color);
+			if (chonkAsteroid[i].active) DrawCircleLines(chonkAsteroid[i].position.x, chonkAsteroid[i].position.y, chonkAsteroid[i].radius, chonkAsteroid[i].color);
 		}
 
 		//DRAW SHOTS -- Whenever a shot is active, draw it
@@ -410,7 +476,6 @@ void Draw() {
 				DrawCircleV(shoot[i].position, shoot[i].radius, shoot[i].color);
 			}
 		}
-
 
 		//DEBUGGING STUFF -- stuff used for debugging and general information
 		if (debugActive) {
@@ -425,8 +490,6 @@ void Draw() {
 			DrawText(TextFormat("IMMUNITY TIMER: %01i", player.immunityTimer), 50, 250, 20, WHITE);
 			DrawCircleLines(player.position.x + sinf(player.rotation * PI / 180.0f) * (player.shipSize * 0.5f), player.position.y - cosf(player.rotation * PI / 180.0f) * (player.shipSize * 0.5f), player.collisionRad + 1, RED);
 		}
-
-		ClearBackground(DARKERGRAY);
 
 		if (victory) DrawText("VICTORY  -- PRESS [ENTER]", 400, 450, 60, WHITE);
 	}

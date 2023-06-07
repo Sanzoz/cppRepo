@@ -6,7 +6,8 @@ public:
 	Vector2 position;
 	Vector2 direction;
 	float radius;
-	float rotateDirection;
+	int scoreIncrease;
 	bool active;
 	Color color;
+	Image image;
 };
