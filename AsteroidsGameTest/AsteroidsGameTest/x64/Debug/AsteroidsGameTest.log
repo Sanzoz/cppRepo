@@ -7,4 +7,6 @@ C:\Users\s221097\Documents\GitHub\cppRepo\AsteroidsGameTest\AsteroidsGameTest\Ga
 C:\Users\s221097\Documents\GitHub\cppRepo\AsteroidsGameTest\AsteroidsGameTest\Game.cpp(470,74): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
 C:\Users\s221097\Documents\GitHub\cppRepo\AsteroidsGameTest\AsteroidsGameTest\Game.cpp(491,122): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
 C:\Users\s221097\Documents\GitHub\cppRepo\AsteroidsGameTest\AsteroidsGameTest\Game.cpp(491,38): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+  main.cpp
+  Generating Code...
   AsteroidsGameTest.vcxproj -> C:\Users\s221097\Documents\GitHub\cppRepo\AsteroidsGameTest\x64\Debug\AsteroidsGameTest.exe
