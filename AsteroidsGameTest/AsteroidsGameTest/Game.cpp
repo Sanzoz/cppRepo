@@ -14,6 +14,7 @@ Asteroids smolAsteroid[smolAsteroidMax]{ 0 };
 Asteroids asteroid[asteroidMax]{ 0 };
 Asteroids chonkAsteroid[chonkAsteroidMax]{ 0 };
 
+//INITIALISE -- Initialises all the variables needed for the game, and resets them when you die or win
 void Initialise() {
 	int randX = 0, randY = 0;
 	int dirX = 0, dirY = 0;
@@ -78,7 +79,7 @@ void Initialise() {
 	for (int i = 0; i < chonkAsteroidAmount; i++) {
 		randX = GetRandomValue(0, screenW); //gets 2 random values and sets them as the direction to travel
 		while (!validDir) {
-			if (randX > screenW / 2 + 500 && randX < screenW / 2 + 500) randX = GetRandomValue(0, screenW);
+			if (randX > screenW / 2 + 500 && randX < screenW / 2 + 500) randX = GetRandomValue(0, screenW); //checks if the value is invalid
 			else validDir = true;
 		}
 		validDir = false;
@@ -89,15 +90,15 @@ void Initialise() {
 			else validDir = true;
 		}
 
-		chonkAsteroid[i].position = Vector2{ (float)randX, (float)randY };
+		chonkAsteroid[i].position = Vector2{ (float)randX, (float)randY }; //uses the random values to set the position
 
 		validDir = false;
 
-		dirX = GetRandomValue(-3, 3);
+		dirX = GetRandomValue(-3, 3); //gets random values for direction
 		dirY = GetRandomValue(-3, 3);
 
-		while (!validDir) {
-			if (dirX == 0 && dirY == 0) {
+		while (!validDir) { //checks if the values are invalid
+			if (dirX == 0 && dirY == 0) { //resets them if they are invalid
 				dirX = GetRandomValue(-3, 3);
 				dirY = GetRandomValue(-3, 3);
 			}
@@ -106,7 +107,7 @@ void Initialise() {
 
 		validDir = false;
 
-		chonkAsteroid[i].direction = Vector2{ (float)dirX, (float)dirY };
+		chonkAsteroid[i].direction = Vector2{ (float)dirX, (float)dirY }; //sets moving direction to the random values
 		chonkAsteroid[i].radius = 68;
 		chonkAsteroid[i].scoreIncrease = 250;
 		chonkAsteroid[i].active = true;
@@ -116,6 +117,7 @@ void Initialise() {
 
 }
 
+//UPDATE -- updates the game constantly
 void Update() {
 	if (!victory) {
 		if (!gameOver) {
@@ -141,21 +143,21 @@ void Update() {
 			}															   //prevents ship from gliding backwards when you stop accelerating
 			if (IsKeyDown(KEY_DOWN)) {
 				//force slows the ship
-				if (player.acceleration > 0) player.acceleration -= 0.08f;
-				else if (player.acceleration < 0) player.acceleration = 0;
+				if (player.acceleration > 0) player.acceleration -= 0.14f; //slows you down when holding back
+				else if (player.acceleration < 0) player.acceleration = 0; //else kill the acceleration
 			}
 
 			//SHOOTING INPUTS -- gets the space bar to when to shoot
 			if (IsKeyPressed(KEY_SPACE)) {
 				for (int i = 0; i < maxShots; i++) {
-					if (!shoot[i].active) {
+					if (!shoot[i].active) { //loops through and if shots are inactive, activates them and shoots it
 						shoot[i].position = Vector2{ player.position.x + sinf(player.rotation * PI / 180.0f) * player.shipSize * 2, player.position.y - cosf(player.rotation * PI / 180.0f) * player.shipSize * 2};
 						shoot[i].active = true;
 						shoot[i].direction.x = 1.5f * sin(player.rotation * PI / 180.0f) * shoot[i].shotSpeed;
 						shoot[i].direction.y = 1.5f * cos(player.rotation * PI / 180.0f) * shoot[i].shotSpeed;
-						shoot[i].rotation = player.rotation;
+						shoot[i].rotation = player.rotation; //used for spliting the asteroids, takes the player rotation
 						shoot[i].bulletLife = 0;
-						break;
+						break; //brekas the loop so we don't go on infinitely
 					}
 				}
 			}
@@ -237,17 +239,17 @@ void Update() {
 
 			//ASTEROID BULLET COLLISION -- when you shoot an asteroid, explode it and split it into 2 -- for and if loop spam time
 			for (int i = 0; i < maxShots; i++) {
-				if (shoot[i].active) {
-					for (int m = 0; m < chonkAsteroidMax; m++) {
-						if (chonkAsteroid[m].active && CheckCollisionCircles(shoot[i].position, shoot[i].radius, chonkAsteroid[m].position, chonkAsteroid[m].radius)) {
-							shoot[i].bulletLife = 0;
+				if (shoot[i].active) { //if the shot is active
+					for (int m = 0; m < chonkAsteroidMax; m++) { //loops through all asteroids
+						if (chonkAsteroid[m].active && CheckCollisionCircles(shoot[i].position, shoot[i].radius, chonkAsteroid[m].position, chonkAsteroid[m].radius)) { //if active and colliders overlap
+							shoot[i].bulletLife = 0; //kill the bullet
 							shoot[i].active = false;
-							chonkAsteroid[m].active = false;
+							chonkAsteroid[m].active = false; //kill the asteroid
 							asteroidsDestroyed++;
-							player.score += chonkAsteroid[m].scoreIncrease;
+							player.score += chonkAsteroid[m].scoreIncrease; //increase the score and check if we can give a life
 							if (player.score >= (player.livesGained * gainLifeScore)) player.canGainLife = true;
 
-							for (int a = 0; a < 2; a++) {
+							for (int a = 0; a < 2; a++) { //splits the asteroid in 2
 								if (asteroidsCount % 2 == 0) {
 									asteroid[asteroidsCount].position = Vector2{ chonkAsteroid[m].position.x + chonkAsteroid[i].radius / 2, chonkAsteroid[m].position.y + chonkAsteroid[i].radius / 2 };
 									asteroid[asteroidsCount].direction = Vector2{ cos(shoot[i].rotation * PI / 180) * 2, -sin(shoot[i].rotation * PI / 180) * 2};
@@ -257,7 +259,7 @@ void Update() {
 									asteroid[asteroidsCount].direction = Vector2{ -cos(shoot[i].rotation * PI / 180) * 2, sin(shoot[i].rotation * PI / 180) * 2};
 								}
 
-								asteroid[asteroidsCount].active = true;
+								asteroid[asteroidsCount].active = true; //activates the asteroids
 								asteroidsCount++;
 							}
 						}
@@ -296,6 +298,7 @@ void Update() {
 							if (player.score >= (player.livesGained * gainLifeScore)) player.canGainLife = true;
 							asteroidSpawner++;
 
+							//copy paste from initialise with, spawns a chonk asteroid
 							if (asteroidSpawner % 4 == 0) {
 								asteroidSpawner = 0;
 								
@@ -368,7 +371,7 @@ void Update() {
 				}
 			}
 
-			//ROTATION -- That epic rotate yo
+			//ROTATION -- That epic rotate yo -- no longer used, done above to get the more retro rotation
 			/*player.direction.x = sin(player.rotation * PI / 180.0f) * 1.2f;
 			player.direction.y = cos(player.rotation * PI / 180.0f) * 1.2f;*/
 
